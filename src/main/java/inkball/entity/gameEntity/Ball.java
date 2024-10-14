@@ -13,11 +13,12 @@ public class Ball extends ImageEntity {
     private PVector velocity;
     private final double radious;
     private final PVector centerPosition;
+
     @Override
     public void draw() {
         position.add(velocity);
+        centerPosition.add(velocity);
         app.image(ImageCache.ballsCache[color], position.x, position.y);
-
     }
 
     public Ball(int x, int y, Integer color, String name) {
@@ -87,16 +88,12 @@ public class Ball extends ImageEntity {
     public boolean checkCollide(PVector p1, PVector p2) {
         PVector lineVec = PVector.sub(p2, p1);
         PVector posVec = PVector.sub(centerPosition, p1);
-
         // Project posVec onto lineVec
         float projection = PVector.dot(posVec, lineVec) / lineVec.magSq();
-
         // Clamp the projection to the range [0, 1] to ensure it's on the segment
         projection = Math.max(0, Math.min(1, projection));
-
         // Find the closest point on the line to the position
         PVector closestPoint = PVector.add(p1, PVector.mult(lineVec, projection));
-
         // Check if the distance from the ball's position to the closest point is less than its radius
         return PVector.dist(centerPosition, closestPoint) < radious;
     }

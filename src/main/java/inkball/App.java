@@ -138,7 +138,7 @@ public class App extends PApplet {
         //display game end message
 
 
-        System.out.println(frameRate);
+       // System.out.println(frameRate);
     }
 
 
