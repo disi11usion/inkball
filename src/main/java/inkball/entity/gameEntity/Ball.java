@@ -86,16 +86,10 @@ public class Ball extends ImageEntity {
     }
 
     public boolean checkCollide(PVector p1, PVector p2) {
-        PVector lineVec = PVector.sub(p2, p1);
-        PVector posVec = PVector.sub(centerPosition, p1);
-        // Project posVec onto lineVec
-        float projection = PVector.dot(posVec, lineVec) / lineVec.magSq();
-        // Clamp the projection to the range [0, 1] to ensure it's on the segment
-        projection = Math.max(0, Math.min(1, projection));
-        // Find the closest point on the line to the position
-        PVector closestPoint = PVector.add(p1, PVector.mult(lineVec, projection));
-        // Check if the distance from the ball's position to the closest point is less than its radius
-        return PVector.dist(centerPosition, closestPoint) < radious;
+        double d1 = PVector.dist(p1, PVector.add(centerPosition, velocity));
+        double d2 = PVector.dist(p2, PVector.add(centerPosition, velocity));
+        double d3 = PVector.dist(p1, p2) + radious;
+        return d1 + d2 < d3;
     }
 
 

@@ -61,7 +61,7 @@ public class App extends PApplet {
         ImageCache.InitImageCache(this);
         frameRate(FPS);
         gameConfig = new GameConfig(this.configPath);
-        activeLayout = new Layout(gameConfig.getLevels().get(0));
+        activeLayout = new Layout(gameConfig.getLevels().get(1));
         //See PApplet javadoc:
         //loadJSONObject(configPath)
         // the image is loaded from relative path: "src/main/resources/inkball/..."
