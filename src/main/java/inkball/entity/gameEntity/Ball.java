@@ -35,7 +35,9 @@ public class Ball extends ImageEntity {
                 (float) (position.y + radious));
     }
 
-    public void draw(MouseLine mouseLine, List<Wall> walls) {
+    public void draw(MouseLine mouseLine, List<Wall> walls, List<Hole> holes) {
+        if (checkInHole(holes))
+            return;
         app.image(ImageCache.ballsCache[color], position.x, position.y);
         this.checkMouseLine(mouseLine);
         this.checkWalls(walls);
@@ -86,10 +88,10 @@ public class Ball extends ImageEntity {
     }
 
     public boolean checkCollide(PVector p1, PVector p2) {
-        double d1 = PVector.dist(p1, PVector.add(centerPosition, velocity));
-        double d2 = PVector.dist(p2, PVector.add(centerPosition, velocity));
-        double d3 = PVector.dist(p1, p2) + radious;
-        return d1 + d2 < d3;
+        float dist1 = PVector.dist(p1, PVector.add(centerPosition, velocity));
+        float dist2 = PVector.dist(p2, PVector.add(centerPosition, velocity));
+        float dist3 = PVector.dist(p1, p2);
+        return dist1 + dist2 < dist3+radious+0.1;
     }
 
 
@@ -109,5 +111,22 @@ public class Ball extends ImageEntity {
         float v1 = 2 * PVector.dot(velocity, n);
         PVector v2 = PVector.mult(n, v1);
         velocity = PVector.sub(velocity, v2);
+    }
+
+    private double cosAngleC(double a, double b, double c) {
+        double aSquare = a * a;
+        double bSquare = b * b;
+        double cSquare = c * c;
+        return (aSquare + bSquare - cSquare) / (2 * a * b);
+    }
+
+    private boolean checkInHole(List<Hole> holes) {
+        for (Hole hole : holes) {
+            float dist = PVector.dist(centerPosition, hole.centralPoint);
+            if (dist <= this.radious) {
+                return true;
+            }
+        }
+        return false;
     }
 }

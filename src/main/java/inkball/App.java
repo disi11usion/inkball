@@ -61,7 +61,7 @@ public class App extends PApplet {
         ImageCache.InitImageCache(this);
         frameRate(FPS);
         gameConfig = new GameConfig(this.configPath);
-        activeLayout = new Layout(gameConfig.getLevels().get(1));
+        activeLayout = new Layout(gameConfig.getLevels().get(0));
         //See PApplet javadoc:
         //loadJSONObject(configPath)
         // the image is loaded from relative path: "src/main/resources/inkball/..."
@@ -124,7 +124,7 @@ public class App extends PApplet {
 
         activeLayout.drawLayout();
         for (Ball ball : activeLayout.getBalls()) {
-            ball.draw(mouseLine, activeLayout.getWalls());
+            ball.draw(mouseLine, activeLayout.getWalls(),activeLayout.getHoles());
         }
         currentLine.drawCurrentLine();
         mouseLine.drawLines();
@@ -132,7 +132,7 @@ public class App extends PApplet {
         //display score
         //----------------------------------
         //TODO
-
+        //System.out.println(this.frameRate);
         //----------------------------------
         //----------------------------------
         //display game end message

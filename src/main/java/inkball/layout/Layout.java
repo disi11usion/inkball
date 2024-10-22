@@ -28,6 +28,11 @@ public class Layout {
     }
 
 
+    public List<Hole> getHoles() {
+
+        return holes;
+    }
+
     public Layout(Level level) {
         File layoutFile = new File(level.getLayoutPath());
         Scanner scanner;
