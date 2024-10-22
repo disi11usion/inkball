@@ -2,17 +2,23 @@ package inkball.entity.gameEntity;
 
 
 import inkball.App;
+import inkball.config.Score;
 import inkball.entity.ImageCache;
 import inkball.entity.ImageEntity;
 import inkball.entity.CollideLine.MouseLine;
 import processing.core.PVector;
 
 import java.util.List;
+import java.util.Objects;
+
+import static java.lang.Math.max;
 
 public class Ball extends ImageEntity {
     private PVector velocity;
     private final double radious;
     private final PVector centerPosition;
+    public boolean getInHoled = false;
+    private float scale = 1;
 
     @Override
     public void draw() {
@@ -38,7 +44,11 @@ public class Ball extends ImageEntity {
     public void draw(MouseLine mouseLine, List<Wall> walls, List<Hole> holes) {
         if (checkInHole(holes))
             return;
+        ImageCache.ballsCache[color].resize((int) (24 * scale), (int) (24 * scale));
         app.image(ImageCache.ballsCache[color], position.x, position.y);
+        if (scale < 1) {
+            ImageCache.refreshBallCache(app);
+        }
         this.checkMouseLine(mouseLine);
         this.checkWalls(walls);
         position.add(velocity);
@@ -91,7 +101,7 @@ public class Ball extends ImageEntity {
         float dist1 = PVector.dist(p1, PVector.add(centerPosition, velocity));
         float dist2 = PVector.dist(p2, PVector.add(centerPosition, velocity));
         float dist3 = PVector.dist(p1, p2);
-        return dist1 + dist2 < dist3+radious+0.1;
+        return dist1 + dist2 < dist3 + radious + 0.1;
     }
 
 
@@ -121,12 +131,33 @@ public class Ball extends ImageEntity {
     }
 
     private boolean checkInHole(List<Hole> holes) {
+        PVector scaledCenterPosition = new PVector(position.x + scale * 12,
+                position.y + scale * 12);
         for (Hole hole : holes) {
-            float dist = PVector.dist(centerPosition, hole.centralPoint);
+            float dist = PVector.dist(scaledCenterPosition, hole.centralPoint);
             if (dist <= this.radious) {
+                App.score += calculateScore(hole);
+                getInHoled = true;
                 return true;
+            }
+            if (dist <= hole.radius) {
+                PVector t = PVector.sub(hole.centralPoint, scaledCenterPosition);
+                PVector force = PVector.div(t, 200);
+                this.scale = (float) max(dist / hole.radius, 0.5);
+                velocity.add(force);
             }
         }
         return false;
+    }
+
+
+    private double calculateScore(Hole hole) {
+        if (Objects.equals(this.color, hole.getColor())) {
+            Score rightScore = App.gameConfig.getScoreRight();
+            return rightScore.getScoreAfterMod().get(this.color);
+        } else {
+            Score wrongScore = App.gameConfig.getScoreWrong();
+            return 0 - wrongScore.getScoreAfterMod().get(this.color);
+        }
     }
 }

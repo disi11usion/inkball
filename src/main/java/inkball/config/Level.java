@@ -3,7 +3,6 @@ package inkball.config;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,8 +12,7 @@ public class Level {
     private Integer spawnInterval;
     private Double increaseModifier;
     private Double decreaseModifier;
-    private List<String> balls = new ArrayList<>();
-
+    private List<String> balls;
     public String getLayoutPath() {
         return layoutPath;
     }

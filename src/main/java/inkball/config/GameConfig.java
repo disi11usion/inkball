@@ -14,6 +14,7 @@ public class GameConfig {
     private Score scoreWrong;
 
     private List<Level> levels = new ArrayList<>();
+    private int currentLevelNumber = 0;
 
     public List<Level> getLevelList() {
         return levels;
@@ -41,5 +42,16 @@ public class GameConfig {
 
     public List<Level> getLevels() {
         return levels;
+    }
+
+    public void setCurrentLevelNumber(int currentLevelNumber) {
+        this.currentLevelNumber = currentLevelNumber;
+        Level currentLevel = levels.get(this.currentLevelNumber);
+        scoreRight.setModifier(currentLevel.getIncreaseModifier());
+        scoreWrong.setModifier(currentLevel.getDecreaseModifier());
+    }
+
+    public Level getCurrentLevel() {
+        return levels.get(currentLevelNumber);
     }
 }

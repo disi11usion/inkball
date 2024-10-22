@@ -7,6 +7,7 @@ import inkball.entity.ImageEntity;
 import inkball.entity.CollideLine.CurrentLine;
 import inkball.entity.CollideLine.MouseLine;
 import inkball.layout.Layout;
+import inkball.layout.Topbar;
 import processing.core.PApplet;
 import processing.core.PVector;
 import processing.event.KeyEvent;
@@ -38,6 +39,9 @@ public class App extends PApplet {
     public static MouseLine mouseLine = new MouseLine();
     public CurrentLine currentLine = new CurrentLine();
     // Feel free to add any additional methods or attributes you want. Please put classes in different files.
+    public Topbar topbar;
+    public static double previousFrameCount = 0;
+    public static double score = 0;
 
     public App() {
         this.configPath = "config.json";
@@ -61,7 +65,9 @@ public class App extends PApplet {
         ImageCache.InitImageCache(this);
         frameRate(FPS);
         gameConfig = new GameConfig(this.configPath);
-        activeLayout = new Layout(gameConfig.getLevels().get(0));
+        gameConfig.setCurrentLevelNumber(0);
+        activeLayout = new Layout(gameConfig.getCurrentLevel());
+        this.topbar = new Topbar(this);
         //See PApplet javadoc:
         //loadJSONObject(configPath)
         // the image is loaded from relative path: "src/main/resources/inkball/..."
@@ -121,26 +127,34 @@ public class App extends PApplet {
         //display Board for current level:
         //----------------------------------
         //TODO
-
         activeLayout.drawLayout();
         for (Ball ball : activeLayout.getBalls()) {
-            ball.draw(mouseLine, activeLayout.getWalls(),activeLayout.getHoles());
+            ball.draw(mouseLine, activeLayout.getWalls(), activeLayout.getHoles());
+            if (ball.getInHoled) {
+                activeLayout.getBalls().remove(ball);
+                break;
+            }
         }
+
         currentLine.drawCurrentLine();
         mouseLine.drawLines();
         //----------------------------------
         //display score
         //----------------------------------
-        //TODO
+        topbar.draw();
+
         //System.out.println(this.frameRate);
         //----------------------------------
         //----------------------------------
         //display game end message
 
-
-       // System.out.println(frameRate);
+        // System.out.println(frameRate);
     }
 
+    public int getGameSecond() {
+        int passTime = (int) ((frameCount - previousFrameCount) / FPS);
+        return 120 - passTime;
+    }
 
     public static void main(String[] args) {
         PApplet.main("inkball.App");

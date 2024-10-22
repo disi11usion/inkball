@@ -46,4 +46,10 @@ public class ImageCache {
             ballsCache[i] = app.loadImage("inkball/ball" + i + ".png");
         }
     }
+
+    public static void refreshBallCache(App app) {
+        for (int i = 0; i < 5; i++) {
+            ballsCache[i] = app.loadImage("inkball/ball" + i + ".png");
+        }
+    }
 }

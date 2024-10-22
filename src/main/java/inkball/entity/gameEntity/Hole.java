@@ -18,4 +18,7 @@ public class Hole extends ImageEntity {
     public void draw() {
         app.image(ImageCache.holesCache[color], position.x, position.y);
     }
+    public Integer getColor(){
+        return this.color;
+    }
 }
