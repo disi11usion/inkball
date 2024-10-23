@@ -18,6 +18,7 @@ public class Topbar {
     private List<Ball> allUnBornBalls;
     private double intervalCounter;
     private boolean beginMove = false;
+    public int offset = 0;
 
     public Topbar(App app) {
         this.app = app;
@@ -38,6 +39,10 @@ public class Topbar {
                 level.getSpawnInterval() - (App.levelTime - layout.getSpawnIntervalTime());
     }
 
+    public List<Ball> getAllUnBornBalls() {
+        return allUnBornBalls;
+    }
+
     public void draw(boolean isPaused) {
         app.fill(200);
         app.noStroke();
@@ -45,9 +50,9 @@ public class Topbar {
         app.fill(0);
         app.textSize(20);
         drawUnbornBalls();
-        app.fill(200);
-        app.rect(12 + 5 * CELLSIZE, 0, WIDTH, Topbar.TOPBAR);
-        app.fill(0);
+//        app.fill(200);
+//        app.rect(12 + 5 * CELLSIZE, 0, WIDTH, Topbar.TOPBAR);
+//        app.fill(0);
         if (isPaused) {
             app.text("*** PAUSED ***", (float) ((float) WIDTH / 2 - (2.5 * CELLSIZE)),
                     CELLSIZE + 12);
@@ -89,6 +94,7 @@ public class Topbar {
             }
         }
         if (beginMove) {
+            offset += 1;
             for (Ball allUnBornBall : allUnBornBalls) {
                 allUnBornBall.setVelocity(new PVector(-1, 0));
             }
@@ -100,6 +106,7 @@ public class Topbar {
             for (Ball allUnBornBall : allUnBornBalls) {
                 allUnBornBall.setVelocity(new PVector(0, 0));
             }
+            offset = 0;
         }
         allUnBornBalls.forEach(Ball::draw);
     }

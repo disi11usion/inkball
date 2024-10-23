@@ -175,11 +175,23 @@ public class Ball extends ImageEntity {
             return rightScore.getScoreAfterMod().get(this.color);
         } else {
             Score wrongScore = App.gameConfig.getScoreWrong();
-            Spawner randomSpawner = App.activeLayout.getRandomSpawner();
-            Ball rebornBall = new Ball(randomSpawner.orignalX, randomSpawner.orignalY, this.color,
-                    "rebornBall");
-            App.activeLayout.getBornBalls().add(rebornBall);
+            if (this.color != 0 && hole.getColor() != 0)
+                reBornBalls();
             return 0 - wrongScore.getScoreAfterMod().get(this.color);
         }
+    }
+
+
+    private void reBornBalls() {
+        Spawner randomSpawner = App.activeLayout.getRandomSpawner();
+        Ball rebornBall = new Ball(randomSpawner.orignalX, randomSpawner.orignalY, this.color,
+                "rebornBall");
+        App.activeLayout.getBornBalls().add(rebornBall);
+        Ball displayBall = new Ball(0, 0, this.color, "displayBall");
+        List<Ball> allUnBornBalls = app.topbar.getAllUnBornBalls();
+        allUnBornBalls.add(displayBall);
+        displayBall.setVelocity(new PVector(0, 0));
+        displayBall.setPosition(new PVector(allUnBornBalls.size() * CELLSIZE + 16-app.topbar.offset,
+                24));
     }
 }
