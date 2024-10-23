@@ -1,5 +1,6 @@
 package inkball.layout;
 
+import inkball.App;
 import inkball.config.Level;
 import inkball.entity.*;
 import inkball.entity.gameEntity.Ball;
@@ -22,11 +23,17 @@ public class Layout {
     private final List<Hole> holes = new ArrayList<>();
     private final List<Spawner> spawners = new ArrayList<>();
     private final List<Ball> balls = new ArrayList<>();
+    private final List<Ball> bornBalls = new ArrayList<>();
+    private double spawnIntervalTime = 0;
 
     public List<Wall> getWalls() {
         return walls;
     }
 
+
+    public double getSpawnIntervalTime() {
+        return spawnIntervalTime;
+    }
 
     public List<Hole> getHoles() {
 
@@ -34,6 +41,7 @@ public class Layout {
     }
 
     public Layout(Level level) {
+        this.level = level;
         File layoutFile = new File(level.getLayoutPath());
         Scanner scanner;
         try {
@@ -83,6 +91,7 @@ public class Layout {
                 }
             }
         }
+        setupUnBornBalls();
     }
 
     public List<Tile> getTiles() {
@@ -98,5 +107,49 @@ public class Layout {
         walls.forEach(ImageEntity::draw);
         holes.forEach(ImageEntity::draw);
         spawners.forEach(ImageEntity::draw);
+        if (App.levelTime - spawnIntervalTime >= level.getSpawnInterval()) {
+            spawnIntervalTime = App.levelTime;
+            if (!bornBalls.isEmpty()) {
+                Ball newBall = bornBalls.get(0);
+                balls.add(newBall);
+                bornBalls.remove(0);
+            }
+
+        }
+    }
+
+    public List<Ball> getBornBalls() {
+        return bornBalls;
+    }
+
+    private void setupUnBornBalls() {
+        List<String> strBalls = level.getBalls();
+        for (String strBall : strBalls) {
+            if (strBall.equals("grey")) {
+                Spawner randomSpawner = getRandomSpawner();
+                bornBalls.add(new Ball(randomSpawner.orignalX, randomSpawner.orignalY, 0, "ball"));
+            }
+            if (strBall.equals("orange")) {
+                Spawner randomSpawner = getRandomSpawner();
+                bornBalls.add(new Ball(randomSpawner.orignalX, randomSpawner.orignalY, 1, "ball"));
+            }
+            if (strBall.equals("blue")) {
+                Spawner randomSpawner = getRandomSpawner();
+                bornBalls.add(new Ball(randomSpawner.orignalX, randomSpawner.orignalY, 2, "ball"));
+            }
+            if (strBall.equals("green")) {
+                Spawner randomSpawner = getRandomSpawner();
+                bornBalls.add(new Ball(randomSpawner.orignalX, randomSpawner.orignalY, 3, "ball"));
+            }
+            if (strBall.equals("yellow")) {
+                Spawner randomSpawner = getRandomSpawner();
+                bornBalls.add(new Ball(randomSpawner.orignalX, randomSpawner.orignalY, 4, "ball"));
+            }
+        }
+    }
+
+    public Spawner getRandomSpawner() {
+        int len = spawners.size();
+        return spawners.get((int) (Math.random() * len));
     }
 }

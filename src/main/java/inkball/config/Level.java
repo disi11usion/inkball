@@ -12,7 +12,8 @@ public class Level {
     private Integer spawnInterval;
     private Double increaseModifier;
     private Double decreaseModifier;
-    private List<String> balls;
+    private List<String> unBornBalls;
+
     public String getLayoutPath() {
         return layoutPath;
     }
@@ -54,11 +55,11 @@ public class Level {
     }
 
     public List<String> getBalls() {
-        return balls;
+        return unBornBalls;
     }
 
     public void setBalls(List<String> balls) {
-        this.balls = balls;
+        this.unBornBalls = balls;
     }
 
     public Level(JSONObject jsonObject) {
@@ -68,6 +69,6 @@ public class Level {
         increaseModifier = jsonObject.getDouble("score_increase_from_hole_capture_modifier");
         decreaseModifier = jsonObject.getDouble("score_decrease_from_wrong_hole_modifier");
         JSONArray jsonBalls = jsonObject.getJSONArray("balls");
-        balls = Arrays.asList(jsonBalls.getStringArray());
+        unBornBalls = Arrays.asList(jsonBalls.getStringArray());
     }
 }

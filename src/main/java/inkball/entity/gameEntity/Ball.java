@@ -20,6 +20,21 @@ public class Ball extends ImageEntity {
     public boolean getInHoled = false;
     private float scale = 1;
 
+    public void setVelocity(PVector velocity) {
+        this.velocity = velocity;
+    }
+
+    public Ball changeToTopBar() {
+        Ball ball = new Ball(0, 0, color, "topBarBall");
+        ball.velocity = new PVector(0, 0);
+        ball.position = new PVector(0, 0);
+        return ball;
+    }
+
+    public PVector getPosition() {
+        return this.position;
+    }
+
     @Override
     public void draw() {
         position.add(velocity);
@@ -150,6 +165,9 @@ public class Ball extends ImageEntity {
         return false;
     }
 
+    public void setPosition(PVector position) {
+        this.position = position;
+    }
 
     private double calculateScore(Hole hole) {
         if (Objects.equals(this.color, hole.getColor())) {
@@ -157,6 +175,10 @@ public class Ball extends ImageEntity {
             return rightScore.getScoreAfterMod().get(this.color);
         } else {
             Score wrongScore = App.gameConfig.getScoreWrong();
+            Spawner randomSpawner = App.activeLayout.getRandomSpawner();
+            Ball rebornBall = new Ball(randomSpawner.orignalX, randomSpawner.orignalY, this.color,
+                    "rebornBall");
+            App.activeLayout.getBornBalls().add(rebornBall);
             return 0 - wrongScore.getScoreAfterMod().get(this.color);
         }
     }

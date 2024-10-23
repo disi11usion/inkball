@@ -33,7 +33,7 @@ public class Wall extends ImageEntity {
         points.add(new PVector(this.position.x, this.position.y + 32));
     }
 
-    public int getColor() {
+    public Integer getColor() {
         return this.color;
     }
 }

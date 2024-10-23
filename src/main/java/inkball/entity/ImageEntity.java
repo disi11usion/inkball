@@ -13,11 +13,16 @@ abstract public class ImageEntity {
     protected static final int TOPBAR = 64;
     static protected App app;
 
+    public Integer getColor() {
+        return color;
+    }
+
+    protected PVector originalPosition;
+
     public ImageEntity(int x, int y, Integer color, String name) {
         position = new PVector(x * CELLSIZE, y * CELLSIZE + TOPBAR);
         this.color = color;
     }
-
 
     public static void setApp(App app) {
         ImageEntity.app = app;
