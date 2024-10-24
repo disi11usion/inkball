@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Topbar {
-    private App app;
-    private static int WIDTH = 576;
+    private final App app;
+    private static final int WIDTH = 576;
     public static final int TOPBAR = 64;
-    private static int CELLSIZE = 32;
-    private Layout layout;
-    private Level level;
-    private List<Ball> allUnBornBalls;
+    private static final int CELLSIZE = 32;
+    private final Layout layout;
+    private final Level level;
+    private final List<Ball> allUnBornBalls;
     private double intervalCounter;
     private boolean beginMove = false;
     public int offset = 0;
@@ -50,9 +50,9 @@ public class Topbar {
         app.fill(0);
         app.textSize(20);
         drawUnbornBalls();
-//        app.fill(200);
-//        app.rect(12 + 5 * CELLSIZE, 0, WIDTH, Topbar.TOPBAR);
-//        app.fill(0);
+        app.fill(200);
+        app.rect(12 + 5 * CELLSIZE, 0, WIDTH, Topbar.TOPBAR);
+        app.fill(0);
         if (isPaused) {
             app.text("*** PAUSED ***", (float) ((float) WIDTH / 2 - (2.5 * CELLSIZE)),
                     CELLSIZE + 12);
