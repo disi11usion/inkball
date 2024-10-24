@@ -65,7 +65,7 @@ public class App extends PApplet {
         currentLevelNumber = 0;
         totalScore = 0;
         gameConfig = new GameConfig(this.configPath);
-        ImageCache.InitImageCache(this);
+        ImageCache.initImageCache(this);
         gameConfig.setCurrentLevelNumber(currentLevelNumber);
 
     }
@@ -128,11 +128,11 @@ public class App extends PApplet {
             this.currentLine = new Line();
         if (mouseButton == RIGHT) {
             PVector mousePos = new PVector(e.getX(), e.getY());
-            for (Line mouseLine : mouseLine.allMouseLines) {
+            for (Line mouseLine : mouseLine.mouseLines) {
                 for (PVector pVector : mouseLine.getCurrentLine()) {
                     float dist = PVector.dist(mousePos, pVector);
                     if (dist < 10) {
-                        App.mouseLine.allMouseLines.remove(mouseLine);
+                        App.mouseLine.mouseLines.remove(mouseLine);
                         return;
                     }
                 }
@@ -154,7 +154,7 @@ public class App extends PApplet {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        mouseLine.allMouseLines.add(currentLine);
+        mouseLine.mouseLines.add(currentLine);
         currentLine = new Line();
     }
 
@@ -173,7 +173,7 @@ public class App extends PApplet {
             activeLayout.drawLayout();
             for (Ball ball : activeLayout.getBalls()) {
                 ball.draw(mouseLine, activeLayout.getWalls(), activeLayout.getHoles());
-                if (ball.getInHoled) {
+                if (ball.isGetInHoled()) {
                     activeLayout.getBalls().remove(ball);
                     break;
                 }

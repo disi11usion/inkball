@@ -3,7 +3,7 @@ package inkball.entity.GameEntity;
 import processing.core.PVector;
 
 public class Hole extends ImageEntity {
-    public PVector centralPoint;
+    private final PVector centralPoint;
     public final float radius = 32;
 
     public Hole(int x, int y, Integer color, String name) {
@@ -17,4 +17,7 @@ public class Hole extends ImageEntity {
         app.image(ImageCache.holesCache[color], position.x, position.y);
     }
 
+    public PVector getCentralPoint() {
+        return centralPoint;
+    }
 }

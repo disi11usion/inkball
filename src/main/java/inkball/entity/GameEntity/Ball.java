@@ -15,7 +15,12 @@ public class Ball extends ImageEntity {
     private PVector velocity;
     private final double radious;
     private final PVector centerPosition;
-    public boolean getInHoled = false;
+
+    public boolean isGetInHoled() {
+        return getInHoled;
+    }
+
+    private boolean getInHoled = false;
     private float scale = 1;
 
     public void setVelocity(PVector velocity) {
@@ -33,7 +38,7 @@ public class Ball extends ImageEntity {
         app.image(ImageCache.ballsCache[color], position.x, position.y);
     }
 
-    public Ball(int x, int y, Integer color, String name) {
+    public Ball(int x, int y, Integer color) {
         super(x, y, color);
         int randomX = Math.random() > 0.5 ? 2 : -2;
         int randomY = Math.random() > 0.5 ? 2 : -2;
@@ -61,9 +66,9 @@ public class Ball extends ImageEntity {
         centerPosition.add(velocity);
     }
 
-    public void checkWalls(List<Wall> walls) {
+    private void checkWalls(List<Wall> walls) {
         for (Wall wall : walls) {
-            List<PVector> points = wall.points;
+            List<PVector> points = wall.getPoints();
             for (int i = 0; i < points.size() - 1; i++) {
                 PVector p1 = points.get(i);
                 PVector p2 = points.get(i + 1);
@@ -87,23 +92,23 @@ public class Ball extends ImageEntity {
         }
     }
 
-    public void checkMouseLine(MouseLine mouseLine) {
-        for (int i = 0; i < mouseLine.allMouseLines.size(); i++) {
-            List<PVector> pVectors = mouseLine.allMouseLines.get(i).getCurrentLine();
+    private void checkMouseLine(MouseLine mouseLine) {
+        for (int i = 0; i < mouseLine.mouseLines.size(); i++) {
+            List<PVector> pVectors = mouseLine.mouseLines.get(i).getCurrentLine();
             for (int j = 0; j < pVectors.size() - 1; j++) {
                 PVector p1 = pVectors.get(j);
                 PVector p2 = pVectors.get(j + 1);
                 if (checkCollide(p1, p2)) {
                     //System.out.println("MouseLine Collose");
                     getCollide(p1, p2);
-                    mouseLine.allMouseLines.remove(i);
+                    mouseLine.mouseLines.remove(i);
                     return;
                 }
             }
         }
     }
 
-    public boolean checkCollide(PVector p1, PVector p2) {
+    private boolean checkCollide(PVector p1, PVector p2) {
         float dist1 = PVector.dist(p1, PVector.add(centerPosition, velocity));
         float dist2 = PVector.dist(p2, PVector.add(centerPosition, velocity));
         float dist3 = PVector.dist(p1, p2);
@@ -111,7 +116,7 @@ public class Ball extends ImageEntity {
     }
 
 
-    public void getCollide(PVector p1, PVector p2) {
+    private void getCollide(PVector p1, PVector p2) {
         PVector mid = PVector.add(p1, p2).div(2);
         PVector n1 = new PVector(p1.y - p2.y, p2.x - p1.x);
         PVector n2 = new PVector(p2.y - p1.y, p1.x - p2.x);
@@ -129,25 +134,25 @@ public class Ball extends ImageEntity {
         velocity = PVector.sub(velocity, v2);
     }
 
-    private double cosAngleC(double a, double b, double c) {
-        double aSquare = a * a;
-        double bSquare = b * b;
-        double cSquare = c * c;
-        return (aSquare + bSquare - cSquare) / (2 * a * b);
-    }
+//    private double cosAngleC(double a, double b, double c) {
+//        double aSquare = a * a;
+//        double bSquare = b * b;
+//        double cSquare = c * c;
+//        return (aSquare + bSquare - cSquare) / (2 * a * b);
+//    }
 
     private boolean checkInHole(List<Hole> holes) {
         PVector scaledCenterPosition = new PVector(position.x + scale * 12,
                 position.y + scale * 12);
         for (Hole hole : holes) {
-            float dist = PVector.dist(scaledCenterPosition, hole.centralPoint);
+            float dist = PVector.dist(scaledCenterPosition, hole.getCentralPoint());
             if (dist <= this.radious) {
                 App.score += calculateScore(hole);
                 getInHoled = true;
                 return true;
             }
             if (dist <= hole.radius) {
-                PVector t = PVector.sub(hole.centralPoint, scaledCenterPosition);
+                PVector t = PVector.sub(hole.getCentralPoint(), scaledCenterPosition);
                 PVector force = PVector.div(t, 200);
                 this.scale = (float) max(dist / hole.radius, 0.5);
                 velocity.add(force);
@@ -175,14 +180,14 @@ public class Ball extends ImageEntity {
 
     private void reBornBalls() {
         Spawner randomSpawner = App.activeLayout.getRandomSpawner();
-        Ball rebornBall = new Ball(randomSpawner.orignalX, randomSpawner.orignalY, this.color,
-                "rebornBall");
+        Ball rebornBall = new Ball(randomSpawner.getOrignalX(), randomSpawner.getOrignalY(), this.color
+        );
         App.activeLayout.getBornBalls().add(rebornBall);
-        Ball displayBall = new Ball(0, 0, this.color, "displayBall");
+        Ball displayBall = new Ball(0, 0, this.color);
         List<Ball> allUnBornBalls = app.topbar.getAllUnBornBalls();
         allUnBornBalls.add(displayBall);
         displayBall.setVelocity(new PVector(0, 0));
-        displayBall.setPosition(new PVector(allUnBornBalls.size() * CELLSIZE + 16-app.topbar.offset,
+        displayBall.setPosition(new PVector(allUnBornBalls.size() * CELLSIZE + 16-app.topbar.getOffset(),
                 24));
     }
 }

@@ -7,59 +7,35 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Level {
-    private String layoutPath;
-    private Integer time;
-    private Integer spawnInterval;
-    private Double increaseModifier;
-    private Double decreaseModifier;
-    private List<String> unBornBalls;
+    private final String layoutPath;
+    private final Integer time;
+    private final Integer spawnInterval;
+    private final Double increaseModifier;
+    private final Double decreaseModifier;
+    private final List<String> unBornBalls;
 
     public String getLayoutPath() {
         return layoutPath;
-    }
-
-    public void setLayoutPath(String layoutPath) {
-        this.layoutPath = layoutPath;
     }
 
     public Integer getTime() {
         return time;
     }
 
-    public void setTime(Integer time) {
-        this.time = time;
-    }
-
     public Integer getSpawnInterval() {
         return spawnInterval;
-    }
-
-    public void setSpawnInterval(Integer spawnInterval) {
-        this.spawnInterval = spawnInterval;
     }
 
     public Double getIncreaseModifier() {
         return increaseModifier;
     }
 
-    public void setIncreaseModifier(Double increaseModifier) {
-        this.increaseModifier = increaseModifier;
-    }
-
     public Double getDecreaseModifier() {
         return decreaseModifier;
     }
 
-    public void setDecreaseModifier(Double decreaseModifier) {
-        this.decreaseModifier = decreaseModifier;
-    }
-
     public List<String> getBalls() {
         return unBornBalls;
-    }
-
-    public void setBalls(List<String> balls) {
-        this.unBornBalls = balls;
     }
 
     public Level(JSONObject jsonObject) {

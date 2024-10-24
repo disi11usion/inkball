@@ -8,15 +8,12 @@ abstract public class ImageEntity {
     protected PVector position;
     protected Integer color;
     protected static final int CELLSIZE = 32; //8;
-    protected static final int CELLHEIGHT = 32;
     protected static final int TOPBAR = 64;
     static protected App app;
 
     public Integer getColor() {
         return color;
     }
-
-    protected PVector originalPosition;
 
     public ImageEntity(int x, int y, Integer color) {
         position = new PVector(x * CELLSIZE, y * CELLSIZE + TOPBAR);

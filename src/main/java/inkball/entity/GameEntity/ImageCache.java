@@ -10,7 +10,7 @@ public class ImageCache {
     public static PImage spawnCache;
     public static PImage tileCache;
 
-    public static void InitImageCache(App app) {
+    public static void initImageCache(App app) {
 
         //sapwner
         spawnCache = app.loadImage("inkball/entrypoint.png");

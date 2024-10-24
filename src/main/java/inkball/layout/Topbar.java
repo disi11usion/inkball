@@ -11,14 +11,19 @@ import java.util.List;
 public class Topbar {
     private final App app;
     private static final int WIDTH = 576;
-    public static final int TOPBAR = 64;
+    private static final int TOPBAR = 64;
     private static final int CELLSIZE = 32;
     private final Layout layout;
     private final Level level;
     private final List<Ball> allUnBornBalls;
     private double intervalCounter;
     private boolean beginMove = false;
-    public int offset = 0;
+
+    public int getOffset() {
+        return offset;
+    }
+
+    private int offset = 0;
 
     public Topbar(App app) {
         this.app = app;
@@ -30,7 +35,7 @@ public class Topbar {
             PVector ballPosition = new PVector(
                     (16 + (i) * CELLSIZE),
                     24);
-            Ball displayBall = new Ball(0, 0, bornBalls.get(i).getColor(), "displayBall");
+            Ball displayBall = new Ball(0, 0, bornBalls.get(i).getColor());
             displayBall.setPosition(ballPosition);
             displayBall.setVelocity(new PVector(0, 0));
             allUnBornBalls.add(displayBall);

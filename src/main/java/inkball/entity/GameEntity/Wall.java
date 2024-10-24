@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Wall extends ImageEntity {
 
-    public List<PVector> points = new ArrayList<>();
+    private final List<PVector> points = new ArrayList<>();
 
     @Override
     public void draw() {
@@ -21,6 +21,10 @@ public class Wall extends ImageEntity {
         points.add(new PVector(this.position.x+32, this.position.y+32));
         points.add(new PVector(this.position.x, this.position.y + 32));
 
+    }
+
+    public List<PVector> getPoints() {
+        return points;
     }
 
     public Wall(int x, int y, int color, String name) {

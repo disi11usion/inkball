@@ -77,7 +77,7 @@ public class Layout {
                 }
                 if (c == 'B') {
                     int color = line.charAt(j + 1) - 48;
-                    Ball ball = new Ball(j, i, color, "ball");
+                    Ball ball = new Ball(j, i, color);
                     balls.add(ball);
                     Tile tile1 = new Tile(j, i);
                     Tile tile2 = new Tile(j + 1, i);
@@ -122,23 +122,23 @@ public class Layout {
         for (String strBall : strBalls) {
             if (strBall.equals("grey")) {
                 Spawner randomSpawner = getRandomSpawner();
-                bornBalls.add(new Ball(randomSpawner.orignalX, randomSpawner.orignalY, 0, "ball"));
+                bornBalls.add(new Ball(randomSpawner.getOrignalX(), randomSpawner.getOrignalY(), 0));
             }
             if (strBall.equals("orange")) {
                 Spawner randomSpawner = getRandomSpawner();
-                bornBalls.add(new Ball(randomSpawner.orignalX, randomSpawner.orignalY, 1, "ball"));
+                bornBalls.add(new Ball(randomSpawner.getOrignalX(), randomSpawner.getOrignalY(), 1));
             }
             if (strBall.equals("blue")) {
                 Spawner randomSpawner = getRandomSpawner();
-                bornBalls.add(new Ball(randomSpawner.orignalX, randomSpawner.orignalY, 2, "ball"));
+                bornBalls.add(new Ball(randomSpawner.getOrignalX(), randomSpawner.getOrignalY(), 2));
             }
             if (strBall.equals("green")) {
                 Spawner randomSpawner = getRandomSpawner();
-                bornBalls.add(new Ball(randomSpawner.orignalX, randomSpawner.orignalY, 3, "ball"));
+                bornBalls.add(new Ball(randomSpawner.getOrignalX(), randomSpawner.getOrignalY(), 3));
             }
             if (strBall.equals("yellow")) {
                 Spawner randomSpawner = getRandomSpawner();
-                bornBalls.add(new Ball(randomSpawner.orignalX, randomSpawner.orignalY, 4, "ball"));
+                bornBalls.add(new Ball(randomSpawner.getOrignalX(), randomSpawner.getOrignalY(), 4));
             }
         }
     }
