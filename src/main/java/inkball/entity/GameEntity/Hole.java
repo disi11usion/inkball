@@ -1,7 +1,5 @@
-package inkball.entity.gameEntity;
+package inkball.entity.GameEntity;
 
-import inkball.entity.ImageCache;
-import inkball.entity.ImageEntity;
 import processing.core.PVector;
 
 public class Hole extends ImageEntity {
@@ -10,7 +8,7 @@ public class Hole extends ImageEntity {
 
     public Hole(int x, int y, Integer color, String name) {
 
-        super(x, y, color, name);
+        super(x, y, color);
         this.centralPoint = PVector.add(this.position, new PVector(32, 32));
     }
 
@@ -18,7 +16,5 @@ public class Hole extends ImageEntity {
     public void draw() {
         app.image(ImageCache.holesCache[color], position.x, position.y);
     }
-    public Integer getColor(){
-        return this.color;
-    }
+
 }

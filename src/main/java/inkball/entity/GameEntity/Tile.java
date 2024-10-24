@@ -1,7 +1,4 @@
-package inkball.entity.gameEntity;
-
-import inkball.entity.ImageCache;
-import inkball.entity.ImageEntity;
+package inkball.entity.GameEntity;
 
 public class Tile  extends ImageEntity {
     @Override
@@ -10,6 +7,6 @@ public class Tile  extends ImageEntity {
     }
 
     public Tile(int x, int y) {
-        super(x, y,null,"tile");
+        super(x, y,null);
     }
 }

@@ -1,9 +1,7 @@
 package inkball;
 
 import inkball.config.GameConfig;
-import inkball.entity.ImageCache;
 import inkball.layout.Layout;
-import inkball.utils.JsonConfigReader;
 import org.junit.jupiter.api.Test;
 
 public class SampleTest {

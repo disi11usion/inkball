@@ -1,7 +1,5 @@
-package inkball.entity.gameEntity;
+package inkball.entity.GameEntity;
 
-import inkball.entity.ImageCache;
-import inkball.entity.ImageEntity;
 import processing.core.PVector;
 
 import java.util.ArrayList;
@@ -17,7 +15,7 @@ public class Wall extends ImageEntity {
     }
 
     public Wall(int x, int y) {
-        super(x, y, 0, "wall");
+        super(x, y, 0);
         points.add(this.position);
         points.add(new PVector(this.position.x+32, this.position.y));
         points.add(new PVector(this.position.x+32, this.position.y+32));
@@ -26,14 +24,12 @@ public class Wall extends ImageEntity {
     }
 
     public Wall(int x, int y, int color, String name) {
-        super(x, y, color, name);
+        super(x, y, color);
         points.add(this.position);
         points.add(new PVector(this.position.x+32, this.position.y));
         points.add(new PVector(this.position.x+32, this.position.y+32));
         points.add(new PVector(this.position.x, this.position.y + 32));
     }
 
-    public Integer getColor() {
-        return this.color;
-    }
+
 }

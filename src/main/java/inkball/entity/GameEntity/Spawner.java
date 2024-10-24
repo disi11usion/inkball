@@ -1,14 +1,11 @@
-package inkball.entity.gameEntity;
-
-import inkball.entity.ImageCache;
-import inkball.entity.ImageEntity;
+package inkball.entity.GameEntity;
 
 public class Spawner extends ImageEntity {
     public int orignalX;
     public int orignalY;
 
     public Spawner(int x, int y, String name) {
-        super(x, y, null, name);
+        super(x, y, null);
         orignalX = x;
         orignalY = y;
     }

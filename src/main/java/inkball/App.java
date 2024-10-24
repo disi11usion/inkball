@@ -2,10 +2,10 @@ package inkball;
 
 import inkball.config.GameConfig;
 import inkball.config.Level;
-import inkball.entity.gameEntity.Ball;
-import inkball.entity.ImageCache;
-import inkball.entity.ImageEntity;
-import inkball.entity.CollideLine.CurrentLine;
+import inkball.entity.GameEntity.Ball;
+import inkball.entity.GameEntity.ImageCache;
+import inkball.entity.GameEntity.ImageEntity;
+import inkball.entity.CollideLine.Line;
 import inkball.entity.CollideLine.MouseLine;
 import inkball.layout.Layout;
 import inkball.layout.Topbar;
@@ -38,7 +38,7 @@ public class App extends PApplet {
     public static GameConfig gameConfig;
     public static Layout activeLayout;
     public static MouseLine mouseLine = new MouseLine();
-    public CurrentLine currentLine = new CurrentLine();
+    public Line currentLine = new Line();
     // Feel free to add any additional methods or attributes you want. Please put classes in different files.
     public Topbar topbar;
     public static double score = 0;
@@ -60,7 +60,7 @@ public class App extends PApplet {
     public void settings() {
         size(WIDTH, HEIGHT);
         ImageEntity.setApp(this);
-        CurrentLine.setApp(this);
+        Line.setApp(this);
         runningTime=0;
         currentLevelNumber = 0;
         totalScore = 0;
@@ -83,7 +83,7 @@ public class App extends PApplet {
         score = 0;
         levelTime = 0;
         mouseLine = new MouseLine();
-        currentLine = new CurrentLine();
+        currentLine = new Line();
         timeRunout = false;
     }
 
@@ -125,10 +125,10 @@ public class App extends PApplet {
     public void mousePressed(MouseEvent e) {
         // create a new player-drawn line object
         if (mouseButton == LEFT)
-            this.currentLine = new CurrentLine();
+            this.currentLine = new Line();
         if (mouseButton == RIGHT) {
             PVector mousePos = new PVector(e.getX(), e.getY());
-            for (CurrentLine mouseLine : mouseLine.allMouseLines) {
+            for (Line mouseLine : mouseLine.allMouseLines) {
                 for (PVector pVector : mouseLine.getCurrentLine()) {
                     float dist = PVector.dist(mousePos, pVector);
                     if (dist < 10) {
@@ -155,7 +155,7 @@ public class App extends PApplet {
     @Override
     public void mouseReleased(MouseEvent e) {
         mouseLine.allMouseLines.add(currentLine);
-        currentLine = new CurrentLine();
+        currentLine = new Line();
     }
 
     /**
@@ -185,7 +185,7 @@ public class App extends PApplet {
         //----------------------------------
         //----------------------------------
         //display game end message
-        currentLine.drawCurrentLine();
+        currentLine.drawLine();
         mouseLine.drawLines();
         //----------------------------------
         //display score

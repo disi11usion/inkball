@@ -1,4 +1,4 @@
-package inkball.entity;
+package inkball.entity.GameEntity;
 
 import inkball.App;
 import processing.core.PImage;

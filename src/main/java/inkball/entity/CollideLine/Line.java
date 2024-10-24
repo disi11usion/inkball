@@ -7,7 +7,7 @@ import processing.core.PVector;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CurrentLine {
+public class Line {
     private List<PVector> currentLine = new ArrayList<>();
     private static App app;
 
@@ -19,7 +19,7 @@ public class CurrentLine {
         this.currentLine = currentLine;
     }
 
-    public void drawCurrentLine() {
+    public void drawLine() {
         for (int i = 0; i < currentLine.size() - 1; i++) {
             PVector mousePoint1 = currentLine.get(i);
             PVector mousePoint2 = currentLine.get(i + 1);
@@ -31,6 +31,6 @@ public class CurrentLine {
     }
 
     public static void setApp(App app) {
-        CurrentLine.app = app;
+        Line.app = app;
     }
 }

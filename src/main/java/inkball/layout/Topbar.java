@@ -2,7 +2,7 @@ package inkball.layout;
 
 import inkball.App;
 import inkball.config.Level;
-import inkball.entity.gameEntity.Ball;
+import inkball.entity.GameEntity.Ball;
 import processing.core.PVector;
 
 import java.util.ArrayList;

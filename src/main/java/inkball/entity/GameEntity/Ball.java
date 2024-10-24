@@ -1,10 +1,8 @@
-package inkball.entity.gameEntity;
+package inkball.entity.GameEntity;
 
 
 import inkball.App;
 import inkball.config.Score;
-import inkball.entity.ImageCache;
-import inkball.entity.ImageEntity;
 import inkball.entity.CollideLine.MouseLine;
 import processing.core.PVector;
 
@@ -24,13 +22,6 @@ public class Ball extends ImageEntity {
         this.velocity = velocity;
     }
 
-    public Ball changeToTopBar() {
-        Ball ball = new Ball(0, 0, color, "topBarBall");
-        ball.velocity = new PVector(0, 0);
-        ball.position = new PVector(0, 0);
-        return ball;
-    }
-
     public PVector getPosition() {
         return this.position;
     }
@@ -43,7 +34,7 @@ public class Ball extends ImageEntity {
     }
 
     public Ball(int x, int y, Integer color, String name) {
-        super(x, y, color, name);
+        super(x, y, color);
         int randomX = Math.random() > 0.5 ? 2 : -2;
         int randomY = Math.random() > 0.5 ? 2 : -2;
         if (App.FPS == 60) {

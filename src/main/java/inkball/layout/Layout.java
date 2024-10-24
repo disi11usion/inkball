@@ -2,12 +2,7 @@ package inkball.layout;
 
 import inkball.App;
 import inkball.config.Level;
-import inkball.entity.*;
-import inkball.entity.gameEntity.Ball;
-import inkball.entity.gameEntity.Hole;
-import inkball.entity.gameEntity.Spawner;
-import inkball.entity.gameEntity.Tile;
-import inkball.entity.gameEntity.Wall;
+import inkball.entity.GameEntity.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,8 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Layout {
-    private Level level;
-    private final List<String> lines = new ArrayList<>();
+    private final Level level;
     private final List<Wall> walls = new ArrayList<>();
     private final List<Tile> tiles = new ArrayList<>();
     private final List<Hole> holes = new ArrayList<>();
@@ -49,6 +43,7 @@ public class Layout {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+        List<String> lines = new ArrayList<>();
         while (scanner.hasNextLine()) {
             lines.add(scanner.nextLine());
         }
